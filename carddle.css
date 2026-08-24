@@ -187,12 +187,10 @@ body {
 .game:hover { border-color: var(--green); }
 .game h3 { margin: 0; font-size: 21px; }
 .game p { margin: 0; color: var(--muted); font-size: 15px; }
-.game .tag { align-self: flex-start; font-size: 12px; font-weight: 700;
-             text-transform: uppercase; letter-spacing: 0.09em;
-             padding: 4px 9px; border-radius: 999px;
-             background: var(--panel-2); color: var(--faint); }
-.game .tag.live { background: var(--green); color: var(--on-green); }
-.game .demo { margin-top: 4px; }
+/* The three descriptions run to different lengths, so the demo rows sat at
+   different heights across the row of cards. margin-top:auto pushes each one
+   to the bottom of its own card and lines them up. */
+.game .demo { margin-top: auto; padding-top: 4px; }
 
 /* --------------------------------------------------------------------- doc */
 
