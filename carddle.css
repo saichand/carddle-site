@@ -175,6 +175,14 @@ body {
   background-position: 0 0;
   border-radius: 4px;
   gap: 0; padding: 0; border: 0;
+  /* The gradient paints its line at the start of each tile, so the board got a
+     line at x=0 and y=0 but nothing at the far edge, where the next line would
+     fall just outside the box. This closes the last row and column. An inset
+     shadow rather than a border, so the 92px and 46px cells still fit exactly,
+     and offset rather than spread so it lands only on the right and bottom: a
+     full ring doubled up with the gradient on the other two sides and made
+     them visibly darker. */
+  box-shadow: inset -1px -1px 0 0 var(--gridline);
 }
 
 .hero .meld {
