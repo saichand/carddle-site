@@ -295,7 +295,9 @@ body.home {
 .game-icon { width: 46px; height: 46px; flex: none; display: block; }
 
 .doc-head { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; }
-.doc-head h1 { margin: 0; }
+/* .doc h1 sets a 6px bottom margin and, at equal specificity, comes later in
+   the file, so it won and pushed the title 3px above the icon's centre. */
+.doc .doc-head h1 { margin: 0; }
 .doc-icon { width: 64px; height: 64px; flex: none; display: block; }
 @media (max-width: 480px) {
   .doc-icon { width: 52px; height: 52px; }
