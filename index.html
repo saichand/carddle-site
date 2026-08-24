@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carddle</title>
+  <meta name="description" content="Three card games played on a grid, where melds are laid out in space and where you play matters as much as what you play." />
+  <link rel="canonical" href="https://carddle.net/" />
+  <link rel="icon" href="assets/logo-128.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/logo-256.png" />
+  <link rel="stylesheet" href="carddle.css" />
+  <meta name="theme-color" content="#121d1f" />
+  <script src="theme.js"></script>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Carddle" />
+  <meta property="og:description" content="Three card games played on a grid. Runs and sets, laid out in space." />
+  <meta property="og:url" content="https://carddle.net/" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="nav-home" href="./">
+        <img src="assets/logo-64.png" alt="" width="24" height="24" />
+        <span class="nav-word">Carddle</span>
+      </a>
+      <div class="nav-links">
+        <a href="anchor/">Anchor</a>
+        <a href="tide/">Tide</a>
+        <a href="https://innovatory.xyz/" class="optional">Innovatory</a>
+        <span class="theme-mount" data-theme-mount></span>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="hero">
+      <div class="wrap">
+        <img class="mark" src="assets/logo-256.png" alt="" width="88" height="88" />
+        <h1>Card games that need a board.</h1>
+        <p class="sub">
+          Runs and sets, laid out on a grid. Where you put a card matters as much as which
+          card it is. Two games are built, a third is on the way.
+        </p>
+
+        <div class="meld" aria-hidden="true" style="margin-bottom:26px">
+          <span class="card red"><span class="r">3</span><span class="s">&diams;</span></span>
+          <span class="card red"><span class="r">4</span><span class="s">&diams;</span></span>
+          <span class="card red"><span class="r">5</span><span class="s">&diams;</span></span>
+          <span class="card red"><span class="r">6</span><span class="s">&diams;</span></span>
+          <span class="card red"><span class="r">7</span><span class="s">&diams;</span></span>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-ghost" href="anchor/">Read the rules</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="wrap">
+        <p class="kicker">Three games, one deck</p>
+        <h2>The same cards, three different arguments.</h2>
+        <p class="lede">
+          Every game here is played with two standard decks and jokers, on a grid rather
+          than in a row. What changes between them is what you are allowed to do to the
+          board once cards are on it.
+        </p>
+
+        <div class="games">
+          <a class="game" href="anchor/">
+            <span class="tag live">Built</span>
+            <h3>Anchor</h3>
+            <p>
+              Runs and sets on a 15 by 15 board, built out from a single ace in the centre.
+              Cards never move once played. Aces are not low cards here, they are anchors,
+              and playing one is the only way to start a new island anywhere you like.
+            </p>
+            <div class="meld demo" aria-hidden="true">
+              <span class="card small"><span class="r">A</span><span class="s">&spades;</span></span>
+              <span class="card small"><span class="r">9</span><span class="s">&spades;</span></span>
+              <span class="card small red"><span class="r">9</span><span class="s">&hearts;</span></span>
+              <span class="card small"><span class="r">9</span><span class="s">&clubs;</span></span>
+            </div>
+          </a>
+
+          <a class="game" href="tide/">
+            <span class="tag live">Built</span>
+            <h3>Tide</h3>
+            <p>
+              Every turn you may take the entire table apart and rebuild it, so long as it
+              is all valid again by the time you are done. Melds sit as islands rather than
+              one connected structure, and they may cross and share a card.
+            </p>
+            <div class="meld demo" aria-hidden="true">
+              <span class="card small red"><span class="r">10</span><span class="s">&diams;</span></span>
+              <span class="card small red"><span class="r">J</span><span class="s">&diams;</span></span>
+              <span class="card small red"><span class="r">Q</span><span class="s">&diams;</span></span>
+            </div>
+          </a>
+
+          <div class="game" style="cursor:default">
+            <span class="tag">In design</span>
+            <h3>Line</h3>
+            <p>
+              The third game. Still being worked out, and not yet playable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <p class="kicker">What is different</p>
+        <h2>Rummy has no geography. These do.</h2>
+        <p class="lede">
+          In ordinary rummy a meld is a list. Here it is a line on a board, and the line has
+          neighbours. A card can belong to a run going across and a set going down at the
+          same time, which means the good move is rarely the obvious one.
+        </p>
+        <p class="lede">
+          Anchor is the tighter game: the board only ever grows, so a careless placement is
+          permanent. Tide is the looser one: nothing is permanent, and a turn can rearrange
+          work everyone else has done.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p>Carddle, by Innovatory.</p>
+      <div class="footer-links">
+        <a href="anchor/">Anchor rules</a>
+        <a href="tide/">Tide rules</a>
+        <a href="mailto:hello@innovatory.xyz">Contact</a>
+        <a href="https://innovatory.xyz/">Innovatory</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

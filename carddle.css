@@ -1,0 +1,242 @@
+/* Carddle site styles.
+
+   The palette is sampled from the app rather than invented: the board is
+   #121d1f, cards are #f6f2e4, the primary action is #127a57 and the suits are
+   #c90a0d. The light theme reuses the card colour as the page, so the site
+   reads as the same object as the game rather than a site about it. */
+
+:root {
+  color-scheme: dark;
+
+  --bg:        #121d1f;
+  --panel:     #1d2c2e;
+  --panel-2:   #2a3d40;
+  --line:      rgba(255, 255, 255, 0.09);
+  --grid:      rgba(255, 255, 255, 0.035);
+
+  --text:      #eef2f1;
+  --muted:     #a3b6b4;
+  --faint:     #8ca09e;   /* clears 4.5:1 on the panels, not just the board */
+
+  --card:      #f6f2e4;
+  --card-ink:  #121d1f;
+  --card-edge: rgba(0, 0, 0, 0.35);
+
+  --green:     #127a57;   /* the app's button green, used as a fill */
+  --green-hi:  #17936a;
+  --on-green:  #ffffff;
+  /* #127a57 is only 3.23:1 on the board, so text set in green uses a lighter
+     tint of the same hue at 5.05:1. Fills are unaffected: white on #127a57 is
+     5.32:1 and passes. */
+  --green-text: #179e71;
+  --red:       #c90a0d;
+  --lilac:     #ddd4f8;
+
+  --wash:      rgba(255, 255, 255, 0.035);
+  --measure:   68ch;
+  --radius:    14px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg:        #f6f2e4;
+  --panel:     #efe9d7;
+  --panel-2:   #e3dbc6;
+  --line:      rgba(18, 29, 31, 0.13);
+  --grid:      rgba(18, 29, 31, 0.05);
+
+  --text:      #121d1f;
+  --muted:     #4f6462;
+  --faint:     #596968;   /* 3.68:1 on cream was too low; this is 5.14:1 */
+
+  --card:      #ffffff;
+  --card-ink:  #121d1f;
+  --card-edge: rgba(18, 29, 31, 0.22);
+
+  --green:     #0f6a4b;
+  --green-hi:  #0c5a40;
+  --on-green:  #ffffff;
+  --green-text: #0c5a40;
+  --red:       #b00a0d;
+  --lilac:     #6b4fbe;
+
+  --wash:      rgba(18, 29, 31, 0.035);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 17px/1.6 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  /* The board's grid, at a fraction of its strength in the app. */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 46px 46px, 46px 46px;
+}
+
+.wrap { width: min(1080px, calc(100% - 44px)); margin-inline: auto; }
+.narrow { width: min(760px, calc(100% - 44px)); }
+
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--card); color: var(--card-ink);
+  padding: 10px 16px; border-radius: 8px;
+}
+.skip:focus { left: 16px; top: 16px; z-index: 10; }
+
+/* ---------------------------------------------------------------------- nav */
+
+.nav {
+  position: sticky; top: 0; z-index: 5;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { display: flex; align-items: center; gap: 16px; height: 60px; }
+.nav-home { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 650; }
+.nav-home img { border-radius: 7px; }
+.nav-links { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 15px; }
+.nav-links a:hover { color: var(--text); }
+
+/* ------------------------------------------------------------------- cards */
+/* Real card elements rather than images, so they stay crisp and theme with
+   the rest of the page. */
+
+.card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 46px; height: 62px;
+  background: var(--card);
+  color: var(--card-ink);
+  border-radius: 6px;
+  box-shadow: 0 1px 0 var(--card-edge), 0 6px 14px rgba(0,0,0,0.22);
+  font-weight: 650;
+  line-height: 1.05;
+  user-select: none;
+}
+.card .r { font-size: 17px; }
+.card .s { font-size: 14px; }
+.card.red { color: var(--red); }
+.card.pick { outline: 3px solid var(--lilac); outline-offset: 2px; }
+.card.small { width: 34px; height: 46px; border-radius: 5px; }
+.card.small .r { font-size: 13px; }
+.card.small .s { font-size: 11px; }
+
+.hand { display: flex; gap: 8px; flex-wrap: wrap; }
+.meld { display: inline-flex; gap: 5px; padding: 10px; background: var(--wash);
+        border: 1px solid var(--line); border-radius: 10px; }
+
+/* -------------------------------------------------------------------- hero */
+
+.hero { padding: clamp(44px, 7vw, 88px) 0 clamp(28px, 4vw, 48px); text-align: center; }
+.hero .mark { border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.hero h1 {
+  font-size: clamp(34px, 5.2vw, 58px);
+  line-height: 1.04; letter-spacing: -0.03em;
+  margin: 20px auto 14px; max-width: 18ch;
+}
+.hero p.sub { color: var(--muted); font-size: clamp(16px, 1.8vw, 19px);
+              max-width: 56ch; margin: 0 auto 26px; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 22px; border-radius: 11px;
+  font-weight: 650; font-size: 15px; text-decoration: none;
+  border: 1px solid transparent;
+}
+.btn-primary { background: var(--green); color: var(--on-green); }
+.btn-primary:hover { background: var(--green-hi); }
+.btn-ghost { border-color: var(--line); color: var(--text); }
+.btn-ghost:hover { background: var(--wash); }
+.cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ----------------------------------------------------------------- sections */
+
+.section { padding: clamp(36px, 5vw, 68px) 0; }
+.section h2 { font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.02em; margin: 0 0 8px; }
+.kicker { text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px;
+          font-weight: 700; color: var(--green-text); margin: 0 0 10px; }
+.lede { color: var(--muted); max-width: var(--measure); }
+
+.games { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 26px; }
+.game {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 22px; text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.game:hover { border-color: var(--green); }
+.game h3 { margin: 0; font-size: 21px; }
+.game p { margin: 0; color: var(--muted); font-size: 15px; }
+.game .tag { align-self: flex-start; font-size: 12px; font-weight: 700;
+             text-transform: uppercase; letter-spacing: 0.09em;
+             padding: 4px 9px; border-radius: 999px;
+             background: var(--panel-2); color: var(--faint); }
+.game .tag.live { background: var(--green); color: var(--on-green); }
+.game .demo { margin-top: 4px; }
+
+/* --------------------------------------------------------------------- doc */
+
+.doc { padding: clamp(32px, 5vw, 60px) 0 60px; }
+.doc h1 { font-size: clamp(30px, 4vw, 42px); letter-spacing: -0.025em; margin: 0 0 6px; }
+.doc .updated { color: var(--faint); font-size: 14px; margin: 0 0 30px; }
+.doc h2 { font-size: 23px; margin: 38px 0 10px; letter-spacing: -0.015em; }
+.doc h3 { font-size: 18px; margin: 26px 0 8px; }
+.doc p, .doc li { color: var(--muted); max-width: var(--measure); }
+.doc li { margin-bottom: 7px; }
+.doc strong { color: var(--text); }
+.doc code {
+  background: var(--wash); border: 1px solid var(--line);
+  padding: 1px 5px; border-radius: 5px; font-size: 0.9em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.table-wrap { overflow-x: auto; margin: 18px 0; }
+.doc table { border-collapse: collapse; min-width: 320px; }
+.doc th, .doc td { text-align: left; padding: 8px 16px 8px 0; border-bottom: 1px solid var(--line); }
+.doc th { color: var(--text); font-size: 14px; text-transform: uppercase; letter-spacing: 0.07em; }
+.doc td { color: var(--muted); }
+
+.note {
+  background: var(--panel); border: 1px solid var(--line);
+  border-left: 3px solid var(--green);
+  border-radius: 10px; padding: 14px 18px; margin: 20px 0;
+}
+.note p { margin: 0; }
+
+/* ------------------------------------------------------------------ footer */
+
+.footer { border-top: 1px solid var(--line); padding: 32px 0 44px; margin-top: 40px; }
+.footer-inner { display: flex; gap: 20px; flex-wrap: wrap; align-items: baseline; }
+.footer p { margin: 0; color: var(--faint); font-size: 14px; }
+.footer-links { margin-left: auto; display: flex; gap: 18px; flex-wrap: wrap; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
+.footer-links a:hover { color: var(--text); }
+
+/* ------------------------------------------------------------ theme switch */
+
+.theme-switch { display: inline-flex; gap: 2px; padding: 3px;
+                background: var(--panel-2); border-radius: 999px; }
+.theme-switch button {
+  width: 30px; height: 26px; display: grid; place-items: center;
+  border: 0; background: transparent; color: var(--faint);
+  border-radius: 999px; cursor: pointer;
+}
+.theme-switch button[aria-checked="true"] { background: var(--bg); color: var(--text); }
+.theme-switch svg { width: 15px; height: 15px; }
+
+@media (max-width: 620px) {
+  .nav-links a.optional { display: none; }
+  .nav-home .nav-word { display: none; }
+  .nav-links { gap: 14px; }
+}

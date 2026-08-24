@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anchor rules</title>
+  <meta name="description" content="How to play Anchor: runs and sets on a 15 by 15 board, where aces are anchors rather than low cards and nothing moves once played." />
+  <link rel="canonical" href="https://carddle.net/anchor/" />
+  <link rel="icon" href="../assets/logo-128.png" type="image/png" />
+  <link rel="stylesheet" href="../carddle.css" />
+  <meta name="theme-color" content="#121d1f" />
+  <script src="../theme.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="nav-home" href="../">
+        <img src="../assets/logo-64.png" alt="" width="24" height="24" />
+        <span class="nav-word">Carddle</span>
+      </a>
+      <div class="nav-links">
+        <a href="../tide/">Tide</a>
+        <a href="https://innovatory.xyz/" class="optional">Innovatory</a>
+        <span class="theme-mount" data-theme-mount></span>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" class="doc">
+    <div class="wrap narrow">
+      <h1>Anchor</h1>
+      <p class="updated">Rummy melds, placed like Scrabble. 2 to 6 players.</p>
+
+      <p>
+        Anchor is played on a shared 15 by 15 board. You score by building runs and sets out
+        of a 7 card hand, and by extending the ones already there. Cards never move once
+        they are down, so every placement is permanent and the board only ever grows.
+      </p>
+
+      <h2>What you play with</h2>
+      <ul>
+        <li>Two standard 52 card decks plus four jokers, 108 cards in total</li>
+        <li>A 15 by 15 board</li>
+        <li>A draw pile and a three card discard market</li>
+        <li>A hand of 7 cards, refilled at the end of your turn</li>
+      </ul>
+
+      <h2>What cards are worth</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Card</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>2 to 9</td><td>Face value</td></tr>
+            <tr><td>10, J, Q, K</td><td>10</td></tr>
+            <tr><td>Ace</td><td>0</td></tr>
+            <tr><td>Joker</td><td>0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note">
+        <p>
+          <strong>Aces are not low cards.</strong> An ace is never part of a run or a set.
+          It exists only as an anchor. That means the lowest run is 2-3-4, and there is no
+          such thing as a set of aces.
+        </p>
+      </div>
+
+      <h2>Melds</h2>
+
+      <h3>Runs</h3>
+      <p>Same suit, consecutive, three to five cards. No wrapping around from king to ace.</p>
+      <div class="meld" aria-hidden="true">
+        <span class="card red"><span class="r">10</span><span class="s">&diams;</span></span>
+        <span class="card red"><span class="r">J</span><span class="s">&diams;</span></span>
+        <span class="card red"><span class="r">Q</span><span class="s">&diams;</span></span>
+      </div>
+
+      <h3>Sets</h3>
+      <p>Same rank, three or four cards, every one a different suit.</p>
+      <div class="meld" aria-hidden="true">
+        <span class="card"><span class="r">9</span><span class="s">&spades;</span></span>
+        <span class="card red"><span class="r">9</span><span class="s">&hearts;</span></span>
+        <span class="card"><span class="r">9</span><span class="s">&clubs;</span></span>
+      </div>
+
+      <h2>The board</h2>
+      <ul>
+        <li>Cards read across or down, never diagonally</li>
+        <li>No stacking, and no gaps inside a line</li>
+        <li>A card may belong to a run one way and a set the other way at the same time</li>
+      </ul>
+
+      <p>
+        The game starts with a single ace in the centre. That ace belongs to nobody and
+        scores nothing. Every group you place has to connect to something already on the
+        board, with exactly one exception, below.
+      </p>
+
+      <h3>How a line may end its turn</h3>
+      <p>When your turn ends, every line you touched has to be one of three things:</p>
+      <ul>
+        <li>a single bare card, which is legal but is not a meld</li>
+        <li>an open meld of two cards, which is legal but counted against a limit</li>
+        <li>a complete meld</li>
+      </ul>
+      <p>Anything else is an illegal move. How many open melds you may leave depends on the table:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Players</th><th>Open melds allowed</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td>1</td></tr>
+            <tr><td>3 to 4</td><td>2</td></tr>
+            <tr><td>5 to 6</td><td>3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        A line touching an anchor is stricter still. It must be a complete meld, always. A
+        bare card or an open meld next to an anchor is never allowed, however legal it
+        would be anywhere else.
+      </p>
+
+      <h2>Anchors</h2>
+      <p>
+        Playing an ace is the only way to start a new, separate island of cards somewhere
+        else on the board. It costs your whole turn.
+      </p>
+      <p>An anchor play is one line of four or five cards, placed together:</p>
+      <ul>
+        <li>exactly one ace, at one end of the line, never in the middle</li>
+        <li>three or four other cards next to it, forming a complete run or set on their own</li>
+        <li>none of them touching any card already on the board</li>
+      </ul>
+      <div class="meld" aria-hidden="true">
+        <span class="card"><span class="r">A</span><span class="s">&spades;</span></span>
+        <span class="card"><span class="r">9</span><span class="s">&spades;</span></span>
+        <span class="card red"><span class="r">9</span><span class="s">&hearts;</span></span>
+        <span class="card"><span class="r">9</span><span class="s">&clubs;</span></span>
+      </div>
+      <p>
+        The ace is not part of the meld. It does not count toward the line's length and it
+        does not help complete anything. It is there to mark the cell. It scores zero, and
+        the meld beside it scores at the normal rate with no discount. Anything anyone
+        builds off that anchor later also scores normally. Anchors are not owned.
+      </p>
+
+      <h2>Your turn</h2>
+      <p>Choose exactly one of these.</p>
+
+      <h3>Play</h3>
+      <p>
+        Place up to two groups of cards, or one anchor play. A group is one or more cards,
+        contiguous, in a single row or column, connected to something already on the board.
+        The two groups do not have to touch each other. An anchor play cannot be combined
+        with anything else.
+      </p>
+      <p>
+        You do not have to finish a meld in one turn, within the open meld limit above.
+        Draw back up to seven at the end.
+      </p>
+
+      <h3>Cycle</h3>
+      <p>
+        Discard one to three cards and draw the same number. It is an even swap and it
+        either happens in full or not at all.
+      </p>
+
+      <h3>Pick</h3>
+      <p>
+        Take one to three cards from the discard market and discard the same number. No
+        board play this turn.
+      </p>
+
+      <h3>Anchor exchange</h3>
+      <p>
+        Return one to three unwanted aces to the draw pile and draw the same number back.
+      </p>
+
+      <h2>Scoring</h2>
+      <ul>
+        <li>Cards you play that end up in a complete meld score double their value</li>
+        <li>Jokers score zero, anchors score zero</li>
+        <li>Cards already on the board never score again</li>
+        <li>Each card scores once, even if it sits in both a run and a set</li>
+      </ul>
+
+      <h2>Winning</h2>
+      <p>When someone reaches the target, finish the round. Highest score wins.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Players</th><th>Target</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td>150</td></tr>
+            <tr><td>3 to 4</td><td>250</td></tr>
+            <tr><td>5 to 6</td><td>300</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Ties are broken by most completed melds, then longest completed run, and if it is
+        still level, the win is shared.
+      </p>
+
+      <h2>Odds and ends</h2>
+      <ul>
+        <li>Only the three most recently discarded cards stay available</li>
+        <li>When the draw pile runs out, the older discards are shuffled into a new one</li>
+        <li>If you have no legal move, pass. If everyone passes in a row, the game ends</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p>Carddle, by Innovatory.</p>
+      <div class="footer-links">
+        <a href="../">Carddle</a>
+        <a href="../tide/">Tide rules</a>
+        <a href="mailto:hello@innovatory.xyz">Contact</a>
+        <a href="https://innovatory.xyz/">Innovatory</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
