@@ -31,7 +31,7 @@
   <main id="main" class="doc">
     <div class="wrap narrow">
       <h1>Tide</h1>
-      <p class="updated">Empty your hand to win</p>
+      <p class="updated">Rummikub on a grid, in three formats</p>
 
       <p>
         In Tide you can move anything on the table. Split melds up, recombine them, use a
@@ -115,9 +115,52 @@
         <li><strong>Blocked.</strong> The player holding the smallest hand value wins it.</li>
       </ul>
       <p>
-        Everyone else scores minus the face value of whatever is left in their hand, and a
-        joker left in hand costs 30. The winner gets the sum of those penalties, so it
-        matters a lot how much everyone else was still holding.
+        In Classic and Empty Hand, everyone else scores minus the face value of whatever is
+        left in their hand, and a joker left in hand costs 30. The winner gets the sum of
+        those penalties. Meld Score works differently, below.
+      </p>
+
+      <h2>Three ways to play</h2>
+      <p>
+        All three are Rummikub underneath. What none of them share with it is the grid.
+        Melds take up real squares, so the table fills, and where you lay something decides
+        whether it can grow later.
+      </p>
+
+      <h3>Empty Hand</h3>
+      <p>
+        One round is the whole match. Whoever takes that round wins it.
+      </p>
+      <p>
+        Worth knowing: that includes a blocked round, where the smallest hand wins. Blocked
+        is the ordinary ending rather than the rare one, so this is not a technicality about
+        the name.
+      </p>
+
+      <h3>Classic</h3>
+      <p>
+        Rummikub proper. Rounds are settled by hand penalties and dealt again, to 200 points
+        or five rounds, whichever comes first. Highest score wins. With two players nobody
+        usually reaches 200 inside five rounds, so it comes down to who is ahead when the
+        rounds run out.
+      </p>
+
+      <h3>Meld Score</h3>
+      <p>
+        Every meld scores as you lay it, the face value of the cards that came out of your
+        hand. A joker scores nothing, or laying it as a king would be the best move
+        available every single turn.
+      </p>
+      <p>
+        Extending a meld pays only for the cards you added, not for the meld you joined, and
+        rearranging cards already on the table pays nothing, since neither left your hand.
+        Rounds are not settled by hand value here, because those cards were already paid for
+        on the way down. Going out still ends a round, which is what stops everyone else
+        scoring further.
+      </p>
+      <p>
+        This is the only format that can end in the middle of a round. The match is over the
+        moment someone reaches the target, not when that round happens to finish.
       </p>
 
       <h2>How it differs from Anchor</h2>
@@ -129,7 +172,7 @@
             <tr><td>Unfinished melds</td><td>Allowed, up to a limit</td><td>Never, the table is always resolved</td></tr>
             <tr><td>Aces</td><td>Anchors, worth 0</td><td>Ordinary low card, worth 1</td></tr>
             <tr><td>Board must connect</td><td>Yes, except anchor plays</td><td>No, islands are fine</td></tr>
-            <tr><td>Winning</td><td>First to the target score</td><td>Empty your hand</td></tr>
+            <tr><td>Winning</td><td>First to the target score</td><td>Depends on the format</td></tr>
           </tbody>
         </table>
       </div>
