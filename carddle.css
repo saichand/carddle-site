@@ -82,10 +82,27 @@ body {
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 46px 46px, 46px 46px;
+  /* Anchored to the horizontal centre, so the vertical lines land at
+     W/2 - 23 + 46k. A centred box whose width is 46 + 92k then has both of its
+     edges exactly on a line at any window width. That is why the two column
+     widths below are 1058 and 782 rather than round numbers. */
+  background-position: 50% 0;
 }
 
-.wrap { width: min(1080px, calc(100% - 44px)); margin-inline: auto; }
-.narrow { width: min(760px, calc(100% - 44px)); }
+.wrap { width: min(1058px, calc(100% - 44px)); margin-inline: auto; }
+.narrow { width: min(782px, calc(100% - 44px)); }
+
+/* Below the maximum the column would drift up to 23px off the grid, so round
+   it down to the nearest width that still satisfies 46 + 92k. Guarded twice:
+   @supports because a browser without round() would otherwise drop the whole
+   width and go full bleed, and a min-width because on a phone the wider text
+   column is worth more than the alignment. */
+@supports (width: round(down, 100px, 92px)) {
+  @media (min-width: 700px) {
+    .wrap { width: min(1058px, calc(46px + round(down, 100% - 90px, 92px))); }
+    .narrow { width: min(782px, calc(46px + round(down, 100% - 90px, 92px))); }
+  }
+}
 
 .skip {
   position: absolute; left: -9999px;
@@ -138,6 +155,11 @@ body {
 .hand { display: flex; gap: 8px; flex-wrap: wrap; }
 .meld { display: inline-flex; gap: 5px; padding: 10px; background: var(--wash);
         border: 1px solid var(--line); border-radius: 10px; }
+
+/* The hero row drops the tray entirely. With no gap and no padding the five
+   46px cards come to 230px, which is 46 + 92k, so the row centres on a grid
+   line and each card lands in its own cell the way it would on the board. */
+.hero .meld { gap: 0; border: 0; padding: 0; background: transparent; }
 
 /* -------------------------------------------------------------------- hero */
 
@@ -192,7 +214,10 @@ body {
 }
 .names strong { color: var(--text); font-weight: 700; }
 
-.games { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 26px; }
+/* 1058 is 23 cells. Two 46px gaps leave three 322px columns of seven cells
+   each, so every card edge sits on a grid line. The 322px minimum keeps that
+   true as the grid drops to two columns and then one. */
+.games { display: grid; gap: 46px; grid-template-columns: repeat(auto-fit, minmax(322px, 1fr)); margin-top: 26px; }
 .game {
   background: var(--panel); border: 1px solid var(--line);
   border-radius: var(--radius); padding: 22px; text-decoration: none; color: inherit;
