@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Line rules</title>
+  <meta name="description" content="How to play Line, a spatial rummy game on a 4 by 4 grid where only rows count and you win by finishing with the least in hand." />
+  <link rel="canonical" href="https://carddle.net/line/" />
+  <link rel="icon" href="../assets/logo-128.png" type="image/png" />
+  <link rel="stylesheet" href="../carddle.css" />
+  <meta name="theme-color" content="#121d1f" />
+  <script src="../theme.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="nav-home" href="../">
+        <img src="../assets/logo-64.png" alt="" width="24" height="24" />
+        <span class="nav-word">Carddle</span>
+      </a>
+      <div class="nav-links">
+        <a href="../anchor/">Anchor</a>
+        <a href="../tide/">Tide</a>
+        <a href="https://innovatory.xyz/" class="optional">Innovatory</a>
+        <span class="theme-mount" data-theme-mount></span>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" class="doc">
+    <div class="wrap narrow">
+      <h1>Line</h1>
+      <p class="updated">Spatial rummy, 2 to 4 players</p>
+
+      <p>
+        Everyone builds one shared 4 by 4 grid. Sixteen squares, and nobody can take them
+        apart. When the grid fills, whoever is holding the least wins.
+      </p>
+
+      <div class="note">
+        <p>
+          <strong>Only rows are melds.</strong> Columns are just positions. A card sitting
+          above another card has nothing to do with it.
+        </p>
+      </div>
+
+      <h2>What you play with</h2>
+      <ul>
+        <li>One standard deck plus 4 jokers, 56 cards</li>
+        <li>A 4 by 4 grid, a draw pile and a face-up discard</li>
+        <li>A hand of 7 cards</li>
+      </ul>
+
+      <h2>Rows</h2>
+      <p>Every row has to be able to end up as one of two things.</p>
+
+      <h3>Run</h3>
+      <p>Four consecutive cards of one suit. Ace is low, so A-2-3-4 is the lowest and 10-J-Q-K is the highest. No wrapping around.</p>
+      <div class="meld" aria-hidden="true">
+        <span class="card"><span class="r">A</span><span class="s">&spades;</span></span>
+        <span class="card"><span class="r">2</span><span class="s">&spades;</span></span>
+        <span class="card"><span class="r">3</span><span class="s">&spades;</span></span>
+        <span class="card"><span class="r">4</span><span class="s">&spades;</span></span>
+      </div>
+
+      <h3>Set</h3>
+      <p>Four cards of one rank, one of each suit.</p>
+      <div class="meld" aria-hidden="true">
+        <span class="card"><span class="r">Q</span><span class="s">&spades;</span></span>
+        <span class="card red"><span class="r">Q</span><span class="s">&hearts;</span></span>
+        <span class="card red"><span class="r">Q</span><span class="s">&diams;</span></span>
+        <span class="card"><span class="r">Q</span><span class="s">&clubs;</span></span>
+      </div>
+
+      <p>
+        Where you put a card inside its row makes no difference to whether it is legal. The
+        app arranges rows tidily for reading, runs ascending and sets in suit order, but the
+        rule does not care.
+      </p>
+
+      <h2>Placing a card</h2>
+      <p>You can put a card in an empty square only if that row can still finish.</p>
+      <ul>
+        <li>The first card in a row can be anything</li>
+        <li>The second real card decides the row. Same rank makes it a set, same suit makes it a run, anything else is illegal</li>
+        <li>Once a row has a type, everything after has to agree with it</li>
+      </ul>
+
+      <h2>Jokers</h2>
+      <ul>
+        <li>One joker per row, at most</li>
+        <li>A joker is never declared. It stands for whatever single card the row needs, and that can change as the row changes</li>
+        <li>A row with a joker is legal as long as there is some card the joker could be that lets the row finish</li>
+        <li>One joker covers one gap. It cannot fill two</li>
+      </ul>
+      <p>
+        A joker on its own does not decide anything. A row holding a joker and one real card
+        is still undecided between a run and a set until a second real card settles it.
+      </p>
+
+      <h2>Your turn</h2>
+      <p>Play one card from your hand, or do an upgrade, or do a shift.</p>
+      <p>
+        If none of those three is possible, then and only then you take the top discard, if
+        it can go straight down, or you draw. A drawn card you can play goes down at once. A
+        drawn card you cannot play joins your hand and you discard back to seven.
+      </p>
+      <p>If you have to draw and the pile is empty, the game is over.</p>
+
+      <div class="note">
+        <p>
+          Upgrades and shifts count as things you can do. You cannot skip one in order to
+          draw instead, and drawing is often the better move, which is exactly why it is not
+          allowed.
+        </p>
+      </div>
+
+      <h2>Finishing a row</h2>
+      <p>
+        Complete a row and you get one extra turn straight away. Complete another on that
+        extra turn and you get nothing more. Bonus turns never chain.
+      </p>
+      <p>
+        If the placement that completes a row also fills the last square on the grid, the
+        game ends there and the bonus turn is never played.
+      </p>
+
+      <h2>Upgrade</h2>
+      <p>
+        Swap a joker out of a <strong>completed</strong> row for a real card from your hand
+        that keeps the row valid. That is your whole turn.
+      </p>
+      <ul>
+        <li>The row has to be full. A joker in a half-built row cannot be upgraded</li>
+        <li>The freed joker has to go somewhere immediately, either into another legal empty square or into your hand</li>
+        <li>One joker per row still applies wherever it lands</li>
+        <li>You only get a bonus turn if the joker's new position completes a row</li>
+      </ul>
+      <p>
+        Often more than one card would do. A row of 6&spades; 7&spades; 8&spades; and a
+        joker will take either the 5&spades; or the 9&spades;. The rule only asks whether
+        your card keeps the row valid, not which card the row was "really" waiting for.
+      </p>
+
+      <h2>Shift</h2>
+      <p>
+        Instead of playing into an empty square, play a card into a <strong>completed
+        run</strong> and push one card off the end. Sets never shift.
+      </p>
+      <p>
+        The row has to still be a valid run once exactly one card has come out. Whatever is
+        pushed off goes face up on the discard, joker or not.
+      </p>
+      <p>
+        The card you played stays in the row, and the card that leaves has to be one of the
+        four that were already there. You cannot push out the card you just played, which
+        would leave the row untouched and turn shift into a free discard.
+      </p>
+
+      <h2>Ending and scoring</h2>
+      <p>The game ends the moment the grid fills, or when someone has to draw and the pile is empty.</p>
+      <p>Count what is left in your hand. Lowest total wins.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Card</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Ace</td><td>1</td></tr>
+            <tr><td>2 to 10</td><td>Face value</td></tr>
+            <tr><td>J, Q, K</td><td>10</td></tr>
+            <tr><td>Joker</td><td>20</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Ties go to whoever holds fewest cards. Still tied, the win is shared.</p>
+
+      <h2>How it differs from the other two</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>&nbsp;</th><th>Anchor</th><th>Tide</th><th>Line</th></tr></thead>
+          <tbody>
+            <tr><td>Board</td><td>15 by 15, grows outward</td><td>26 by 26, rebuilt freely</td><td>4 by 4, fixed</td></tr>
+            <tr><td>Melds read</td><td>Both directions</td><td>Both directions</td><td>Rows only</td></tr>
+            <tr><td>Meld length</td><td>3 to 5</td><td>3 to 13</td><td>Always 4</td></tr>
+            <tr><td>Cards already down</td><td>Never move</td><td>Move freely</td><td>Only via shift</td></tr>
+            <tr><td>Winning</td><td>Highest score</td><td>Depends on the format</td><td>Holding the least</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p>Carddle, by Innovatory.</p>
+      <div class="footer-links">
+        <a href="../">Carddle</a>
+        <a href="../anchor/">Anchor rules</a>
+        <a href="../tide/">Tide rules</a>
+        <a href="mailto:hello@innovatory.xyz">Contact</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
