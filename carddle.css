@@ -12,7 +12,8 @@
   --panel:     #1d2c2e;
   --panel-2:   #2a3d40;
   --line:      rgba(255, 255, 255, 0.09);
-  --grid:      rgba(255, 255, 255, 0.035);
+  --grid:      rgba(255, 255, 255, 0.055);
+  --gridline:  rgba(255, 255, 255, 0.14);
 
   --text:      #eef2f1;
   --muted:     #a3b6b4;
@@ -45,7 +46,8 @@
   --panel:     #efe9d7;
   --panel-2:   #e3dbc6;
   --line:      rgba(18, 29, 31, 0.13);
-  --grid:      rgba(18, 29, 31, 0.05);
+  --grid:      rgba(18, 29, 31, 0.07);
+  --gridline:  rgba(18, 29, 31, 0.16);
 
   --text:      #121d1f;
   --muted:     #4f6462;
@@ -156,10 +158,46 @@ body {
 .meld { display: inline-flex; gap: 5px; padding: 10px; background: var(--wash);
         border: 1px solid var(--line); border-radius: 10px; }
 
-/* The hero row drops the tray entirely. With no gap and no padding the five
-   46px cards come to 230px, which is 46 + 92k, so the row centres on a grid
-   line and each card lands in its own cell the way it would on the board. */
-.hero .meld { gap: 0; border: 0; padding: 0; background: transparent; }
+/* Both card rows draw their own board rather than relying on the page's
+   background grid. Two reasons: a game card's panel hides the page grid
+   entirely, and the row's vertical position is not on a grid line, so a card
+   the height of one cell had lines running behind it instead of around it. A
+   self-anchored background is framed correctly on all four sides by
+   construction. The cell has to be larger than the card for that to be
+   visible at all, which is why the hero uses 92 and not 46. */
+.board {
+  /* Opaque, not the translucent wash: the page's own grid was showing through
+     the board and reading as a second, misaligned set of lines inside it. */
+  background-color: var(--panel);
+  background-image:
+    linear-gradient(var(--gridline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gridline) 1px, transparent 1px);
+  background-position: 0 0;
+  border-radius: 4px;
+  gap: 0; padding: 0; border: 0;
+}
+
+.hero .meld {
+  display: inline-grid;
+  grid-template-columns: repeat(5, 92px);
+  grid-auto-rows: 92px;
+  background-size: 92px 92px;
+}
+.hero .meld .card { width: 46px; height: 62px; margin: auto; }
+
+.game .demo {
+  /* A game card is already --panel, so the board inside it needs the next step
+     up or it disappears. */
+  background-color: var(--panel-2);
+  display: grid;
+  grid-template-columns: repeat(6, 46px);
+  grid-auto-rows: 46px;
+  width: max-content;
+  background-size: 46px 46px;
+}
+.game .demo .card.small { width: 34px; height: 38px; margin: auto; border-radius: 4px; }
+.game .demo .card.small .r { font-size: 13px; line-height: 1.1; }
+.game .demo .card.small .s { font-size: 10px; }
 
 /* -------------------------------------------------------------------- hero */
 
@@ -228,8 +266,9 @@ body {
 .game p { margin: 0; color: var(--muted); font-size: 15px; }
 /* The three descriptions run to different lengths, so the demo rows sat at
    different heights across the row of cards. margin-top:auto pushes each one
-   to the bottom of its own card and lines them up. */
-.game .demo { margin-top: auto; padding-top: 4px; }
+   to the bottom of its own card and lines them up. No padding: the row is a
+   board now, and padding would push the cards off its own cells. */
+.game .demo { margin-top: auto; padding: 0; }
 
 /* --------------------------------------------------------------------- doc */
 
