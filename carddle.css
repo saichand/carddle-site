@@ -211,12 +211,16 @@ body.home {
      up or it disappears. */
   background-color: var(--panel-2);
   display: grid;
-  grid-template-columns: repeat(6, 46px);
-  grid-auto-rows: 46px;
-  width: max-content;
-  background-size: 46px 46px;
+  /* Sized the same way as the hero board: a percentage grid, so six cells and
+     the six background stripes stay in step at any width. A fixed 6 x 46px was
+     276px, which is wider than a game card on a 320px screen. */
+  width: min(276px, 100%);
+  aspect-ratio: 6 / 1;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 100%;
+  background-size: 16.6667% 100%;
 }
-.game .demo .card.small { width: 34px; height: 38px; margin: auto; border-radius: 4px; }
+.game .demo .card.small { width: 73.9%; height: 82.6%; margin: auto; border-radius: 4px; }
 .game .demo .card.small .r { font-size: 13px; line-height: 1.1; }
 .game .demo .card.small .s { font-size: 10px; }
 
@@ -276,7 +280,7 @@ body.home {
 /* 1058 is 23 cells. Two 46px gaps leave three 322px columns of seven cells
    each, so every card edge sits on a grid line. The 322px minimum keeps that
    true as the grid drops to two columns and then one. */
-.games { display: grid; gap: 46px; grid-template-columns: repeat(auto-fit, minmax(322px, 1fr)); margin-top: 26px; }
+.games { display: grid; gap: 46px; grid-template-columns: repeat(auto-fit, minmax(min(322px, 100%), 1fr)); margin-top: 26px; }
 .game {
   background: var(--panel); border: 1px solid var(--line);
   border-radius: var(--radius); padding: 22px; text-decoration: none; color: inherit;
