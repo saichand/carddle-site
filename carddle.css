@@ -33,6 +33,7 @@
   --lilac:     #ddd4f8;
 
   --wash:      rgba(255, 255, 255, 0.035);
+  --btn-edge:  rgba(255, 255, 255, 0.28);
   --measure:   68ch;
   --radius:    14px;
 }
@@ -62,6 +63,7 @@
   --lilac:     #6b4fbe;
 
   --wash:      rgba(18, 29, 31, 0.035);
+  --btn-edge:  rgba(18, 29, 31, 0.32);
 }
 
 * { box-sizing: border-box; }
@@ -157,8 +159,15 @@ body {
 }
 .btn-primary { background: var(--green); color: var(--on-green); }
 .btn-primary:hover { background: var(--green-hi); }
-.btn-ghost { border-color: var(--line); color: var(--text); }
-.btn-ghost:hover { background: var(--wash); }
+/* --line is deliberately faint for hairlines between sections, which made a
+   ghost button almost invisible on cream. Buttons get their own stronger
+   border and a slight fill so the shape reads as a control. */
+.btn-ghost {
+  border-color: var(--btn-edge);
+  background: var(--wash);
+  color: var(--text);
+}
+.btn-ghost:hover { background: var(--panel-2); border-color: var(--muted); }
 .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
 /* ----------------------------------------------------------------- sections */
@@ -240,3 +249,5 @@ body {
   .nav-home .nav-word { display: none; }
   .nav-links { gap: 14px; }
 }
+
+.avail { color: var(--muted); font-size: 15px; margin: 22px auto 0; max-width: 48ch; }
