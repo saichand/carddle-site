@@ -288,6 +288,19 @@ body.home {
 }
 .game:hover { border-color: var(--green); }
 .game h3 { margin: 0; font-size: 21px; }
+
+/* Each game has its own icon. On a card it sits beside the title; on a rules
+   page it sits beside the h1, which is why the sizes differ. */
+.game-head { display: flex; align-items: center; gap: 12px; }
+.game-icon { width: 46px; height: 46px; flex: none; display: block; }
+
+.doc-head { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; }
+.doc-head h1 { margin: 0; }
+.doc-icon { width: 64px; height: 64px; flex: none; display: block; }
+@media (max-width: 480px) {
+  .doc-icon { width: 52px; height: 52px; }
+  .game-icon { width: 40px; height: 40px; }
+}
 .game p { margin: 0; color: var(--muted); font-size: 15px; }
 /* The three descriptions run to different lengths, so the demo rows sat at
    different heights across the row of cards. margin-top:auto pushes each one
