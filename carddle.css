@@ -178,6 +178,20 @@ body {
           font-weight: 700; color: var(--green-text); margin: 0 0 10px; }
 .lede { color: var(--muted); max-width: var(--measure); }
 
+/* The three names, one per line. As a paragraph the parallel clauses ran
+   together; as a list the name is the subject and the game cards below carry
+   the actual rules instead of restating them here. */
+.names {
+  list-style: none; margin: 12px 0 0; padding: 0;
+  display: grid; gap: 8px; max-width: var(--measure);
+}
+.names li { position: relative; padding-left: 18px; color: var(--muted); }
+.names li::before {
+  content: ""; position: absolute; left: 0; top: 0.62em;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green-text);
+}
+.names strong { color: var(--text); font-weight: 700; }
+
 .games { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 26px; }
 .game {
   background: var(--panel); border: 1px solid var(--line);
