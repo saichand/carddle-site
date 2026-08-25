@@ -410,16 +410,35 @@ body.home {
 }
 .tv-strip:focus-visible { outline: 3px solid var(--green-text); outline-offset: 6px; }
 .tv { margin: 0; flex: 0 0 min(720px, 88%); scroll-snap-align: start; }
+/* A television, not a card. The bottom bezel is deeper than the other three,
+   which is what reads as a TV rather than a picture frame, and the stand is
+   what stops it reading as a phone in landscape. */
+.tv-set { container-type: inline-size; }
 .tv-screen {
-  background: #0b0f10;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 10px;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.28);
+  background: #17191a;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 1.6cqw;
+  padding: 1.1cqw 1.1cqw 2.6cqw;
+  box-shadow: 0 22px 48px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .tv-screen img {
   display: block; width: 100%; height: auto;
-  border-radius: 6px;
+  border-radius: 0.5cqw;
+  background: #0b0f10;
+}
+.tv-stand { position: relative; height: 3.4cqw; }
+.tv-stand::before {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 13%; height: 2.2cqw;
+  background: linear-gradient(#1d2021, #24282a);
+  border-radius: 0 0 0.5cqw 0.5cqw;
+}
+.tv-stand::after {
+  content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 34%; height: 1.2cqw;
+  background: linear-gradient(#24282a, #141617);
+  border-radius: 0.8cqw;
+  box-shadow: 0 0.7cqw 1.4cqw rgba(0,0,0,0.32);
 }
 .tv figcaption {
   margin-top: 12px; text-align: center;
