@@ -155,10 +155,11 @@
               <video src="assets/shots/anchor.mp4" poster="assets/shots/anchor-poster.webp"
                      muted playsinline preload="auto"
                      aria-label="Anchor being played"></video>
-              <button class="clip-play" type="button" aria-label="Play Anchor">
+              <button class="clip-play" type="button" data-name="Anchor" aria-label="Play Anchor">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <circle cx="12" cy="12" r="11.2" />
-                  <path d="M9.6 7.6 L16.6 12 L9.6 16.4 Z" />
+                  <path class="i-play" d="M9.6 7.6 L16.6 12 L9.6 16.4 Z" />
+                  <path class="i-pause" d="M9.4 7.8h1.9v8.4H9.4z M12.7 7.8h1.9v8.4h-1.9z" />
                 </svg>
               </button>
             </div>
@@ -169,10 +170,11 @@
               <video src="assets/shots/tide.mp4" poster="assets/shots/tide-poster.webp"
                      muted playsinline preload="auto"
                      aria-label="Tide being played"></video>
-              <button class="clip-play" type="button" aria-label="Play Tide">
+              <button class="clip-play" type="button" data-name="Tide" aria-label="Play Tide">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <circle cx="12" cy="12" r="11.2" />
-                  <path d="M9.6 7.6 L16.6 12 L9.6 16.4 Z" />
+                  <path class="i-play" d="M9.6 7.6 L16.6 12 L9.6 16.4 Z" />
+                  <path class="i-pause" d="M9.4 7.8h1.9v8.4H9.4z M12.7 7.8h1.9v8.4h-1.9z" />
                 </svg>
               </button>
             </div>
@@ -183,10 +185,11 @@
               <video src="assets/shots/line.mp4" poster="assets/shots/line-poster.webp"
                      muted playsinline preload="auto"
                      aria-label="Line being played"></video>
-              <button class="clip-play" type="button" aria-label="Play Line">
+              <button class="clip-play" type="button" data-name="Line" aria-label="Play Line">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <circle cx="12" cy="12" r="11.2" />
-                  <path d="M9.6 7.6 L16.6 12 L9.6 16.4 Z" />
+                  <path class="i-play" d="M9.6 7.6 L16.6 12 L9.6 16.4 Z" />
+                  <path class="i-pause" d="M9.4 7.8h1.9v8.4H9.4z M12.7 7.8h1.9v8.4h-1.9z" />
                 </svg>
               </button>
             </div>
@@ -205,6 +208,38 @@
           the board on an iPad or a television instead of crowding one phone. The Apple TV
           app is free and only watches. It cannot play, and nothing leaves your network.
         </p>
+
+        <div class="tv-strip" tabindex="0" role="group"
+             aria-label="The three games shown on an Apple TV. Scroll sideways.">
+          <figure class="tv">
+            <div class="tv-screen">
+              <img src="assets/shots/tv-anchor-800.webp"
+                   srcset="assets/shots/tv-anchor-800.webp 800w, assets/shots/tv-anchor-1600.webp 1600w"
+                   sizes="(max-width: 760px) 88vw, 720px"
+                   width="800" height="450" alt="Anchor on an Apple TV" loading="lazy" />
+            </div>
+            <figcaption>Anchor</figcaption>
+          </figure>
+          <figure class="tv">
+            <div class="tv-screen">
+              <img src="assets/shots/tv-tide-800.webp"
+                   srcset="assets/shots/tv-tide-800.webp 800w, assets/shots/tv-tide-1600.webp 1600w"
+                   sizes="(max-width: 760px) 88vw, 720px"
+                   width="800" height="450" alt="Tide on an Apple TV" loading="lazy" />
+            </div>
+            <figcaption>Tide</figcaption>
+          </figure>
+          <figure class="tv">
+            <div class="tv-screen">
+              <img src="assets/shots/tv-line-800.webp"
+                   srcset="assets/shots/tv-line-800.webp 800w, assets/shots/tv-line-1600.webp 1600w"
+                   sizes="(max-width: 760px) 88vw, 720px"
+                   width="800" height="450" alt="Line on an Apple TV" loading="lazy" />
+            </div>
+            <figcaption>Line</figcaption>
+          </figure>
+        </div>
+        <p class="tv-hint">Scroll sideways for the other two.</p>
       </div>
     </section>
 
@@ -226,10 +261,11 @@
   </footer>
 
     <script>
-      /* Autoplay runs once: first clip, then second, then third, then it stops
-         and every clip offers a play button. Tapping any clip plays that one
-         and hands the others their button back. Nothing loops, and nothing is
-         dimmed, because a greyed-out clip let the page grid show through it. */
+      /* Autoplay runs once: first clip, then second, then third, then it stops.
+         The button over each clip toggles: it plays a stopped clip and pauses a
+         running one, so a clip that is playing still has a control. While it
+         plays the button is invisible and only appears on hover or keyboard
+         focus, so it never sits on top of the board. */
       (function () {
         var wrap = document.querySelector('.clips');
         if (!wrap) return;
@@ -239,30 +275,37 @@
         var btns = clips.map(function (c) { return c.querySelector('.clip-play'); });
         var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        function idle() {
-          vids.forEach(function (v) { v.pause(); });
-          btns.forEach(function (b) { b.hidden = false; });
+        function paint() {
+          vids.forEach(function (v, k) {
+            var on = !v.paused;
+            btns[k].classList.toggle('playing', on);
+            btns[k].setAttribute('aria-label',
+              (on ? 'Pause ' : 'Play ') + btns[k].getAttribute('data-name'));
+          });
         }
         function play(n) {
           vids.forEach(function (v, k) {
-            btns[k].hidden = (k === n);
             if (k !== n) { v.pause(); try { v.currentTime = 0; } catch (e) {} }
           });
           var go = vids[n].play();
-          if (go && go.catch) go.catch(function () { btns[n].hidden = false; });
+          if (go && go.catch) go.catch(function () { paint(); });
+          paint();
         }
 
         var auto = !reduced, started = false;
         vids.forEach(function (v, k) {
           v.addEventListener('ended', function () {
-            btns[k].hidden = false;
-            if (auto && k + 1 < vids.length) play(k + 1);
-            else auto = false;
+            paint();
+            if (auto && k + 1 < vids.length) play(k + 1); else auto = false;
           });
-          btns[k].addEventListener('click', function () { auto = false; play(k); });
+          ['play', 'pause'].forEach(function (e) { v.addEventListener(e, paint); });
+          btns[k].addEventListener('click', function () {
+            auto = false;
+            if (v.paused) play(k); else v.pause();
+          });
         });
 
-        idle();
+        paint();
         if (reduced) return;
         if ('IntersectionObserver' in window) {
           new IntersectionObserver(function (entries, obs) {
