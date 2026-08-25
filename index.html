@@ -152,19 +152,19 @@
         <div class="clips">
           <figure class="clip" style="--poster:url(assets/shots/anchor-poster.webp)">
             <video src="assets/shots/anchor.mp4" poster="assets/shots/anchor-poster.webp"
-                   autoplay muted loop playsinline
+                   muted playsinline preload="auto"
                    aria-label="Anchor being played"></video>
             <figcaption>Anchor</figcaption>
           </figure>
           <figure class="clip" style="--poster:url(assets/shots/tide-poster.webp)">
             <video src="assets/shots/tide.mp4" poster="assets/shots/tide-poster.webp"
-                   autoplay muted loop playsinline
+                   muted playsinline preload="auto"
                    aria-label="Tide being played"></video>
             <figcaption>Tide</figcaption>
           </figure>
           <figure class="clip" style="--poster:url(assets/shots/line-poster.webp)">
             <video src="assets/shots/line.mp4" poster="assets/shots/line-poster.webp"
-                   autoplay muted loop playsinline
+                   muted playsinline preload="auto"
                    aria-label="Line being played"></video>
             <figcaption>Line</figcaption>
           </figure>
@@ -200,5 +200,46 @@
       </div>
     </div>
   </footer>
-</body>
+
+    <script>
+      /* One clip at a time, in order, looping back to the first. Three boards
+         moving at once was three things asking to be watched. Anyone who has
+         asked for reduced motion gets the poster frames and no playback. */
+      (function () {
+        var wrap = document.querySelector('.clips');
+        if (!wrap) return;
+        var vids = [].slice.call(wrap.querySelectorAll('video'));
+        if (!vids.length) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        wrap.setAttribute('data-sequenced', 'true');
+
+        var i = 0, running = false;
+        function play(n) {
+          vids.forEach(function (v, k) {
+            v.classList.toggle('is-playing', k === n);
+            if (k !== n) { v.pause(); try { v.currentTime = 0; } catch (e) {} }
+          });
+          i = n;
+          var v = vids[n];
+          var go = v.play();
+          if (go && go.catch) go.catch(function () {});
+        }
+        vids.forEach(function (v) {
+          v.addEventListener('ended', function () {
+            if (running) play((i + 1) % vids.length);
+          });
+        });
+
+        /* Only while the strip is actually on screen. */
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting && !running) { running = true; play(i); }
+              else if (!e.isIntersecting && running) { running = false; vids[i].pause(); }
+            });
+          }, { threshold: 0.25 }).observe(wrap);
+        } else { running = true; play(0); }
+      }());
+    </script>
+  </body>
 </html>
