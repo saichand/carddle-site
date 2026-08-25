@@ -150,22 +150,46 @@
         <p class="kicker">See it</p>
         <h2 id="see-heading">A turn in each game.</h2>
         <div class="clips">
-          <figure class="clip" style="--poster:url(assets/shots/anchor-poster.webp)">
-            <video src="assets/shots/anchor.mp4" poster="assets/shots/anchor-poster.webp"
-                   muted playsinline preload="auto"
-                   aria-label="Anchor being played"></video>
+          <figure class="clip">
+            <div class="clip-frame">
+              <video src="assets/shots/anchor.mp4" poster="assets/shots/anchor-poster.webp"
+                     muted playsinline preload="auto"
+                     aria-label="Anchor being played"></video>
+              <button class="clip-play" type="button" aria-label="Play Anchor">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="11.2" />
+                  <path d="M9.6 7.6 L16.6 12 L9.6 16.4 Z" />
+                </svg>
+              </button>
+            </div>
             <figcaption>Anchor</figcaption>
           </figure>
-          <figure class="clip" style="--poster:url(assets/shots/tide-poster.webp)">
-            <video src="assets/shots/tide.mp4" poster="assets/shots/tide-poster.webp"
-                   muted playsinline preload="auto"
-                   aria-label="Tide being played"></video>
+          <figure class="clip">
+            <div class="clip-frame">
+              <video src="assets/shots/tide.mp4" poster="assets/shots/tide-poster.webp"
+                     muted playsinline preload="auto"
+                     aria-label="Tide being played"></video>
+              <button class="clip-play" type="button" aria-label="Play Tide">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="11.2" />
+                  <path d="M9.6 7.6 L16.6 12 L9.6 16.4 Z" />
+                </svg>
+              </button>
+            </div>
             <figcaption>Tide</figcaption>
           </figure>
-          <figure class="clip" style="--poster:url(assets/shots/line-poster.webp)">
-            <video src="assets/shots/line.mp4" poster="assets/shots/line-poster.webp"
-                   muted playsinline preload="auto"
-                   aria-label="Line being played"></video>
+          <figure class="clip">
+            <div class="clip-frame">
+              <video src="assets/shots/line.mp4" poster="assets/shots/line-poster.webp"
+                     muted playsinline preload="auto"
+                     aria-label="Line being played"></video>
+              <button class="clip-play" type="button" aria-label="Play Line">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="11.2" />
+                  <path d="M9.6 7.6 L16.6 12 L9.6 16.4 Z" />
+                </svg>
+              </button>
+            </div>
             <figcaption>Line</figcaption>
           </figure>
         </div>
@@ -202,43 +226,51 @@
   </footer>
 
     <script>
-      /* One clip at a time, in order, looping back to the first. Three boards
-         moving at once was three things asking to be watched. Anyone who has
-         asked for reduced motion gets the poster frames and no playback. */
+      /* Autoplay runs once: first clip, then second, then third, then it stops
+         and every clip offers a play button. Tapping any clip plays that one
+         and hands the others their button back. Nothing loops, and nothing is
+         dimmed, because a greyed-out clip let the page grid show through it. */
       (function () {
         var wrap = document.querySelector('.clips');
         if (!wrap) return;
-        var vids = [].slice.call(wrap.querySelectorAll('video'));
-        if (!vids.length) return;
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        wrap.setAttribute('data-sequenced', 'true');
+        var clips = [].slice.call(wrap.querySelectorAll('.clip'));
+        if (!clips.length) return;
+        var vids = clips.map(function (c) { return c.querySelector('video'); });
+        var btns = clips.map(function (c) { return c.querySelector('.clip-play'); });
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        var i = 0, running = false;
+        function idle() {
+          vids.forEach(function (v) { v.pause(); });
+          btns.forEach(function (b) { b.hidden = false; });
+        }
         function play(n) {
           vids.forEach(function (v, k) {
-            v.classList.toggle('is-playing', k === n);
+            btns[k].hidden = (k === n);
             if (k !== n) { v.pause(); try { v.currentTime = 0; } catch (e) {} }
           });
-          i = n;
-          var v = vids[n];
-          var go = v.play();
-          if (go && go.catch) go.catch(function () {});
+          var go = vids[n].play();
+          if (go && go.catch) go.catch(function () { btns[n].hidden = false; });
         }
-        vids.forEach(function (v) {
+
+        var auto = !reduced, started = false;
+        vids.forEach(function (v, k) {
           v.addEventListener('ended', function () {
-            if (running) play((i + 1) % vids.length);
+            btns[k].hidden = false;
+            if (auto && k + 1 < vids.length) play(k + 1);
+            else auto = false;
           });
+          btns[k].addEventListener('click', function () { auto = false; play(k); });
         });
 
-        /* Only while the strip is actually on screen. */
+        idle();
+        if (reduced) return;
         if ('IntersectionObserver' in window) {
-          new IntersectionObserver(function (entries) {
+          new IntersectionObserver(function (entries, obs) {
             entries.forEach(function (e) {
-              if (e.isIntersecting && !running) { running = true; play(i); }
-              else if (!e.isIntersecting && running) { running = false; vids[i].pause(); }
+              if (e.isIntersecting && !started) { started = true; obs.disconnect(); play(0); }
             });
           }, { threshold: 0.25 }).observe(wrap);
-        } else { running = true; play(0); }
+        } else { started = true; play(0); }
       }());
     </script>
   </body>

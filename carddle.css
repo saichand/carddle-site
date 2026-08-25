@@ -349,18 +349,33 @@ body.home {
 }
 /* The clip is a phone screen, so its corner has to be the phone's corner.
    The capture is 1206px wide with a 186px radius (62pt at 3x), which is
-   15.42% of the width. cqw keeps that true at whatever size the grid gives
-   it, rather than the 22px guess that was here before. */
+   15.42% of the width. cqw keeps that true at whatever size the grid gives it,
+   rather than the 22px guess that was here before. */
 .clip { margin: 0; container-type: inline-size; }
-.clip video {
-  display: block; width: 100%; height: auto;
-  border-radius: 15.42cqw; border: 1px solid var(--line);
+.clip-frame {
+  position: relative;
+  border-radius: 15.42cqw;
+  overflow: hidden;
+  /* Opaque. The page's grid used to show through the clips. */
   background: var(--panel);
-  transition: opacity 0.4s ease;
+  border: 1px solid var(--line);
 }
-/* Whichever one is not its turn sits back rather than competing. */
-.clips[data-sequenced="true"] .clip video { opacity: 0.45; }
-.clips[data-sequenced="true"] .clip video.is-playing { opacity: 1; }
+.clip video { display: block; width: 100%; height: auto; }
+
+.clip-play {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  border: 0; padding: 0; cursor: pointer;
+  background: rgba(9, 15, 16, 0.42);
+  transition: background 0.2s ease;
+}
+.clip-play[hidden] { display: none; }
+.clip-play:hover, .clip-play:focus-visible { background: rgba(9, 15, 16, 0.24); }
+.clip-play:focus-visible { outline: 3px solid var(--green-text); outline-offset: -6px; }
+.clip-play svg { width: 22cqw; height: 22cqw; }
+.clip-play circle { fill: rgba(9, 15, 16, 0.55); stroke: rgba(255,255,255,0.9); stroke-width: 1.2; }
+.clip-play path { fill: #fff; }
+
 .clip figcaption {
   margin-top: 12px; color: var(--muted); font-size: 15px; font-weight: 650;
   text-align: center;
