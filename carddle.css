@@ -363,6 +363,7 @@ body.home {
 .clips[data-sequenced="true"] .clip video.is-playing { opacity: 1; }
 .clip figcaption {
   margin-top: 12px; color: var(--muted); font-size: 15px; font-weight: 650;
+  text-align: center;
 }
 @media (prefers-reduced-motion: reduce) {
   .clip video { display: none; }
