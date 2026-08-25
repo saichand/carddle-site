@@ -339,6 +339,39 @@ body.home {
 .doc th { color: var(--text); font-size: 14px; text-transform: uppercase; letter-spacing: 0.07em; }
 .doc td { color: var(--muted); }
 
+/* Screens. The clips autoplay because a poster frame with no play button
+   reads as a picture, not a control, and nobody clicks it. They are silent,
+   looping and about 150KB each. Anyone who has asked for less motion gets the
+   poster instead. */
+.clips {
+  display: grid; gap: 28px; margin-top: 26px;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+}
+.clip { margin: 0; }
+.clip video {
+  display: block; width: 100%; height: auto;
+  border-radius: 22px; border: 1px solid var(--line);
+  background: var(--panel);
+}
+.clip figcaption {
+  margin-top: 12px; color: var(--muted); font-size: 15px; font-weight: 650;
+}
+@media (prefers-reduced-motion: reduce) {
+  .clip video { display: none; }
+  .clip { background-size: cover; }
+  .clip::before {
+    content: ""; display: block; width: 100%; aspect-ratio: 414 / 900;
+    border-radius: 22px; border: 1px solid var(--line);
+    background: var(--panel) var(--poster) center / cover no-repeat;
+  }
+}
+
+.shot { margin: 22px 0 26px; }
+.shot img {
+  display: block; width: min(414px, 100%); height: auto;
+  border-radius: 22px; border: 1px solid var(--line);
+}
+
 .note {
   background: var(--panel); border: 1px solid var(--line);
   border-left: 3px solid var(--green);
