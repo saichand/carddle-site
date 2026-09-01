@@ -362,6 +362,23 @@ body.home {
 }
 .clip video { display: block; width: 100%; height: auto; }
 
+/* Dynamic Island. A screen capture only holds the framebuffer, so the status
+   bar has the gap but not the pill. 126 x 37.33pt sitting 11pt down, on a
+   402pt wide screen: 31.34%, 9.29% and 2.74% of the width. */
+.clip-frame::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 2.74cqw;
+  width: 31.34cqw;
+  height: 9.29cqw;
+  border-radius: 4.65cqw;
+  background: #000;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .clip-play {
   position: absolute; inset: 0;
   display: grid; place-items: center;
@@ -447,10 +464,27 @@ body.home {
 .tv-hint { color: var(--faint); font-size: 14px; margin: 10px 0 0; }
 @media (min-width: 1100px) { .tv-hint { display: none; } }
 
-.shot { margin: 22px 0 26px; }
+.shot {
+  margin: 22px 0 26px;
+  width: min(414px, 100%);
+  position: relative;
+  container-type: inline-size;
+}
 .shot img {
-  display: block; width: min(414px, 100%); height: auto;
-  border-radius: 22px; border: 1px solid var(--line);
+  display: block; width: 100%; height: auto;
+  border-radius: 15.42cqw; border: 1px solid var(--line);
+}
+.shot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 2.74cqw;
+  width: 31.34cqw;
+  height: 9.29cqw;
+  border-radius: 4.65cqw;
+  background: #000;
+  pointer-events: none;
 }
 
 .note {
